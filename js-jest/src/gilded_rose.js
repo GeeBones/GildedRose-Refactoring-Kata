@@ -20,49 +20,54 @@ class Shop {
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
       const itemName = this.items[i].name;
+      let itemQuality = this.items[i].quality;
+      let itemSellIn = this.items[i].sellIn
+
       if (itemName != ItemNames.AGED_BRIE && itemName != ItemNames.BACKSTAGE_PASS) {
-        if (this.items[i].quality > 0) {
+        if (itemQuality > 0) {
           if (itemName != ItemNames.SULFURAS) {
-            this.items[i].quality = this.items[i].quality - 1;
+            itemQuality = itemQuality - 1;
           }
         }
       } else {
-        if (this.items[i].quality < 50) {
-          this.items[i].quality = this.items[i].quality + 1;
+        if (itemQuality < 50) {
+          itemQuality = itemQuality + 1;
           if (itemName == ItemNames.BACKSTAGE_PASS) {
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
+            if (itemSellIn < 11) {
+              if (itemQuality < 50) {
+                itemQuality = itemQuality + 1;
               }
             }
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
+            if (itemSellIn < 6) {
+              if (itemQuality < 50) {
+                itemQuality = itemQuality + 1;
               }
             }
           }
         }
       }
       if (itemName != ItemNames.SULFURAS) {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
+        itemSellIn = itemSellIn - 1;
       }
-      if (this.items[i].sellIn < 0) {
+      if (itemSellIn < 0) {
         if (itemName != ItemNames.AGED_BRIE) {
           if (itemName != ItemNames.BACKSTAGE_PASS) {
-            if (this.items[i].quality > 0) {
+            if (itemQuality > 0) {
               if (itemName != ItemNames.SULFURAS) {
-                this.items[i].quality = this.items[i].quality - 1;
+                itemQuality = itemQuality - 1;
               }
             }
           } else {
-            this.items[i].quality = this.items[i].quality - this.items[i].quality;
+            itemQuality = itemQuality - itemQuality;
           }
         } else {
-          if (this.items[i].quality < 50) {
-            this.items[i].quality = this.items[i].quality + 1;
+          if (itemQuality < 50) {
+            itemQuality = itemQuality + 1;
           }
         }
       }
+      this.items[i].quality = itemQuality;
+      this.items[i].sellIn = itemSellIn;
     }
 
     return this.items;
