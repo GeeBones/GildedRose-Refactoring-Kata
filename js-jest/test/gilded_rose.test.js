@@ -1,4 +1,4 @@
-const {Shop, Item, ItemNames} = require("../src/gilded_rose");
+const {Shop, Item, ItemNames, ConjuredItem} = require("../src/gilded_rose");
 
 describe("Gilded Rose", function() {
   it("should foo", function() {
@@ -114,6 +114,12 @@ describe("Gilded Rose", function() {
     const gildedRose = new Shop([new Item(ItemNames.BACKSTAGE_PASS, -1, 5)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(0);
+  });
+
+  it("should decrease conjured quality at double rate", function() {
+    const gildedRose = new Shop([new ConjuredItem("ci", 1, 5)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(3);
   });
 
 });
