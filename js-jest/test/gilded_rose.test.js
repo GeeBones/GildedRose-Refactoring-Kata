@@ -81,7 +81,7 @@ describe("Gilded Rose", function() {
 
   it("should not change Sulfuras sellin", function() {
     const gildedRose = new Shop([new Item(ItemNames.SULFURAS, 0, 80)]);
-    const items = gildedRose.oldUpdateQuality();
+    const items = gildedRose.updateQuality();
     expect(items[0].sellIn).toBe(0);
   });
 
