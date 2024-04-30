@@ -1,4 +1,4 @@
-const {Shop, Item, ItemNames, ConjuredItem, BasicItem, AgedBrie, Sulfuras, BackstagePass} = require("../src/gilded_rose");
+const {Shop, ConjuredItem, BasicItem, AgedBrie, Sulfuras, BackstagePass} = require("../src/gilded_rose");
 
 describe("Gilded Rose", function() {
   it("should foo", function() {
