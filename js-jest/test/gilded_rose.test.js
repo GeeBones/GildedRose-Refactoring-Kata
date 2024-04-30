@@ -137,6 +137,12 @@ describe("ConjuredItem", function() {
     expect(conjuredItem.quality).toBe(0);
   });
 
+  it("should decrease by 4 after sell by", function() {
+    const conjuredItem = new ConjuredItem("ci", -1, 5);
+    conjuredItem.elapseDay();
+    expect(conjuredItem.quality).toBe(1);
+  });
+
 });
 
 describe("BasicItem", function() {

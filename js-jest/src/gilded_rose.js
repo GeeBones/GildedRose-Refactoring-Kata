@@ -24,7 +24,8 @@ class ConjuredItem extends Item {
   }
   elapseDay() {
     this.sellIn = this.sellIn - 1;
-    this.quality = this.quality -2;
+    const qualityLoss = this.sellIn < 0 ? 4 : 2;
+    this.quality = this.quality - qualityLoss;
     this.quality = this.quality < 0 ? 0 : this.quality;
   }
 }
