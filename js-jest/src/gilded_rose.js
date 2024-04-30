@@ -15,10 +15,13 @@ class BasicItem extends Item {
     return 1;
   }
 
+  getLossRate() {
+    return this.sellIn < 0 ? 2 : 1;
+  }
+
   elapseDay() {
     this.sellIn = this.sellIn - 1;
-    const lossRate = this.sellIn < 0 ? 2 : 1;
-    this.quality = this.quality - lossRate * this.getQualityLoss();
+    this.quality = this.quality - this.getLossRate() * this.getQualityLoss();
     this.quality = this.quality < 0 ? 0 : this.quality;
   }
 }
@@ -35,7 +38,25 @@ class ConjuredItem extends BasicItem {
   elapseDay() {
     super.elapseDay()
   }
+}
 
+class AgedBrie extends BasicItem {
+  constructor(sellIn, quality){
+    super(ItemNames.AGED_BRIE, sellIn, quality)
+  }
+
+    getQualityLoss() {
+      return -1;
+    }
+
+    getLossRate() {
+      return 1;
+    }
+
+    elapseDay() {
+      super.elapseDay()
+      this.quality = this.quality > 50 ? 50 : this.quality;
+    }
 }
 
 const ItemNames = {
@@ -57,7 +78,8 @@ class Shop {
       let itemSellIn = this.items[i].sellIn
 
       if (this.items[i] instanceof ConjuredItem
-      || this.items[i] instanceof BasicItem) {
+      || this.items[i] instanceof BasicItem
+      || this.items[i] instanceof AgedBrie) {
         this.items[i].elapseDay()
       } else {
         if (itemName != ItemNames.AGED_BRIE && itemName != ItemNames.BACKSTAGE_PASS) {
@@ -115,6 +137,7 @@ class Shop {
 module.exports = {
   Item,
   BasicItem,
+  AgedBrie,
   ConjuredItem,
   Shop,
   ItemNames

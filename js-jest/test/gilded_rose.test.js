@@ -1,4 +1,4 @@
-const {Shop, Item, ItemNames, ConjuredItem, BasicItem} = require("../src/gilded_rose");
+const {Shop, Item, ItemNames, ConjuredItem, BasicItem, AgedBrie} = require("../src/gilded_rose");
 
 describe("Gilded Rose", function() {
   it("should foo", function() {
@@ -170,4 +170,31 @@ describe("BasicItem", function() {
     basicItem.elapseDay();
     expect(basicItem.quality).toBe(0);
   });
+});
+
+describe("AgedBrie", function() {
+  it("should increase Aged Brie quality", function() {
+    const agedBrie = new AgedBrie(1, 0);
+    agedBrie.elapseDay();
+    expect(agedBrie.quality).toBe(1);
+  });
+
+  it("should not increase Aged Brie quality over 50", function() {
+    const agedBrie = new AgedBrie(1, 50);
+    agedBrie.elapseDay();
+    expect(agedBrie.quality).toBe(50);
+  });
+
+  it("should increase Aged Brie after sellby", function() {
+    const agedBrie = new AgedBrie(-1, 1);
+    agedBrie.elapseDay();
+    expect(agedBrie.quality).toBe(2);
+  });
+
+  it("should not increase Aged Brie quality over 50 when past sellby", function() {
+    const agedBrie = new AgedBrie(-1, 50);
+    agedBrie.elapseDay();
+    expect(agedBrie.quality).toBe(50);
+  });
+
 });
