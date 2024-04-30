@@ -12,8 +12,9 @@ class BasicItem extends Item {
   }
   elapseDay() {
     this.sellIn = this.sellIn - 1;
-    const qualityLoss = this.sellIn < 0 ? 2 : 1
+    const qualityLoss = this.sellIn < 0 ? 2 : 1;
     this.quality = this.quality - qualityLoss;
+    this.quality = this.quality < 0 ? 0 : this.quality;
   }
 }
 
