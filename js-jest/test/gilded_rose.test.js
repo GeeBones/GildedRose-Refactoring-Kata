@@ -151,4 +151,10 @@ describe("BasicItem", function() {
     basicItem.elapseDay();
     expect(basicItem.quality).toBe(3);
   });
+
+  it("should never have negative quality", function() {
+    const basicItem = new BasicItem("ci", 1, 0);
+    basicItem.elapseDay();
+    expect(basicItem.quality).toBe(0);
+  });
 });
