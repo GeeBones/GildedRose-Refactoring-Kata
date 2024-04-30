@@ -130,6 +130,13 @@ describe("ConjuredItem", function() {
     expect(conjuredItem.quality).toBe(3);
     expect(conjuredItem.sellIn).toBe(0);
   });
+
+  it("should never have negative quality", function() {
+    const conjuredItem = new ConjuredItem("ci", 1, 0);
+    conjuredItem.elapseDay();
+    expect(conjuredItem.quality).toBe(0);
+  });
+
 });
 
 describe("BasicItem", function() {
