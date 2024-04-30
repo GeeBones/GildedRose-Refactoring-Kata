@@ -73,9 +73,9 @@ class BackstagePass extends BasicItem {
   }
 
   getLossRate() {
-    if(this.sellIn < 5) {
+    if (this.sellIn < 5) {
       return 3;
-    } else if(this.sellIn < 10) {
+    } else if (this.sellIn < 10) {
       return 2;
     } else {
       return 1;
@@ -101,9 +101,9 @@ class Shop {
     this.items = items;
   }
   updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
-        this.items[i].elapseDay()
-    }
+    this.items.forEach((item) => {
+        item.elapseDay()
+    })
 
     return this.items;
   }
