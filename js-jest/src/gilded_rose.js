@@ -49,10 +49,6 @@ class AgedBrie extends BasicItem {
       return -1;
     }
 
-    getLossRate() {
-      return 1;
-    }
-
     elapseDay() {
       super.elapseDay()
       this.quality = this.quality > 50 ? 50 : this.quality;
