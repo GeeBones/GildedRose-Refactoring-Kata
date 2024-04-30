@@ -2,92 +2,91 @@ const {Shop, Item, ItemNames, ConjuredItem, BasicItem, AgedBrie, Sulfuras} = req
 
 describe("Gilded Rose", function() {
   it("should foo", function() {
-    const gildedRose = new Shop([new Item("foo", 0, 0)]);
+    const gildedRose = new Shop([new BasicItem("foo", 0, 0)]);
     const items = gildedRose.updateQuality();
     expect(items[0].name).toBe("foo");
   });
 
   it("should decrease sell in", function() {
-    const gildedRose = new Shop([new Item("foo", 1, 0)]);
+    const gildedRose = new Shop([new BasicItem("foo", 1, 0)]);
     const items = gildedRose.updateQuality();
     expect(items[0].sellIn).toBe(0);
   });
 
   it("should decrease sell in past 0", function() {
-    const gildedRose = new Shop([new Item("foo", 0, 0)]);
+    const gildedRose = new Shop([new BasicItem("foo", 0, 0)]);
     const items = gildedRose.updateQuality();
     expect(items[0].sellIn).toBe(-1);
   });
 
   it("should decrease quality", function() {
-    const gildedRose = new Shop([new Item("foo", 1, 1)]);
+    const gildedRose = new Shop([new BasicItem("foo", 1, 1)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(0);
   });
 
   it("should degrade faster after sell by", function() {
-    const gildedRose = new Shop([new Item("foo", 0, 2)]);
+    const gildedRose = new Shop([new BasicItem("foo", 0, 2)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(0);
   })
 
   it("should never have negative quality", function() {
-    const gildedRose = new Shop([new Item("foo", 0, 0)]);
+    const gildedRose = new Shop([new BasicItem("foo", 0, 0)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(0);
   });
 
   it("should decrease quality after sell by", function() {
-    const gildedRose = new Shop([new Item("foo", -1, 3)]);
+    const gildedRose = new Shop([new BasicItem("foo", -1, 3)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(1);
   });
 
   it("should increase Aged Brie quality", function() {
-    const gildedRose = new Shop([new Item(ItemNames.AGED_BRIE, 1, 0)]);
+    const gildedRose = new Shop([new AgedBrie(1, 0)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(1);
   });
 
   it("should not increase Aged Brie quality when 50", function() {
-    const gildedRose = new Shop([new Item(ItemNames.AGED_BRIE, 1, 50)]);
+    const gildedRose = new Shop([new AgedBrie(1, 50)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(50);
   });
 
   it("should increase Aged Brie quality after sell by", function() {
-    const gildedRose = new Shop([new Item(ItemNames.AGED_BRIE, -1, 1)]);
+    const gildedRose = new Shop([new AgedBrie(-1, 1)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(3);
   });
 
   it("should not increase Aged Brie quality when 50 and past sell by", function() {
-    const gildedRose = new Shop([new Item(ItemNames.AGED_BRIE, -1, 50)]);
+    const gildedRose = new Shop([new AgedBrie(-1, 50)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(50);
   });
 
   it("should not decrease Sulfuras quality", function() {
-    const gildedRose = new Shop([new Item(ItemNames.SULFURAS, 1, 80)]);
+    const gildedRose = new Shop([new Sulfuras()]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(80);
   });
 
   it("should not decrease Sulfuras quality past sell by", function() {
-    const gildedRose = new Shop([new Item(ItemNames.SULFURAS, -1, 80)]);
+    const gildedRose = new Shop([new Sulfuras()]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(80);
   });
 
   it("should not change Sulfuras sellin", function() {
-    const gildedRose = new Shop([new Item(ItemNames.SULFURAS, 0, 80)]);
+    const gildedRose = new Shop([new Sulfuras()]);
     const items = gildedRose.updateQuality();
     expect(items[0].sellIn).toBe(0);
   });
 
   it("should increase backstage pass quality by 1 when > 10 days before sell by", function() {
-    const gildedRose = new Shop([new Item(
-      ItemNames.BACKSTAGE_PASS, 11, 1)]);
+    const gildedRose = new Shop([new Item(ItemNames.BACKSTAGE_PASS, 11, 1)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(2);
   });
