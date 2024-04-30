@@ -79,6 +79,12 @@ describe("Gilded Rose", function() {
     expect(items[0].quality).toBe(80);
   });
 
+  it("should not change Sulfuras sellin", function() {
+    const gildedRose = new Shop([new Item(ItemNames.SULFURAS, 0, 80)]);
+    const items = gildedRose.oldUpdateQuality();
+    expect(items[0].sellIn).toBe(0);
+  });
+
   it("should increase backstage pass quality by 1 when > 10 days before sell by", function() {
     const gildedRose = new Shop([new Item(
       ItemNames.BACKSTAGE_PASS, 11, 1)]);
