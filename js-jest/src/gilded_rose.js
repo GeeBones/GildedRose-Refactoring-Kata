@@ -10,24 +10,32 @@ class BasicItem extends Item {
   constructor(name, sellIn, quality){
     super(name, sellIn, quality)
   }
+
+  getQualityLoss() {
+    return 1;
+  }
+
   elapseDay() {
     this.sellIn = this.sellIn - 1;
-    const qualityLoss = this.sellIn < 0 ? 2 : 1;
-    this.quality = this.quality - qualityLoss;
+    const lossRate = this.sellIn < 0 ? 2 : 1;
+    this.quality = this.quality - lossRate * this.getQualityLoss();
     this.quality = this.quality < 0 ? 0 : this.quality;
   }
 }
 
-class ConjuredItem extends Item {
+class ConjuredItem extends BasicItem {
   constructor(name, sellIn, quality){
     super(name, sellIn, quality)
   }
-  elapseDay() {
-    this.sellIn = this.sellIn - 1;
-    const qualityLoss = this.sellIn < 0 ? 4 : 2;
-    this.quality = this.quality - qualityLoss;
-    this.quality = this.quality < 0 ? 0 : this.quality;
+  
+  getQualityLoss() {
+    return 2;
   }
+
+  elapseDay() {
+    super.elapseDay()
+  }
+
 }
 
 const ItemNames = {
