@@ -10,6 +10,10 @@ class ConjuredItem extends Item {
   constructor(name, sellIn, quality){
     super(name, sellIn, quality)
   }
+  updateQuality() {
+    this.sellIn = this.sellIn - 1;
+    this.quality = this.quality -2;
+  }
 }
 
 const ItemNames = {
@@ -31,7 +35,7 @@ class Shop {
       let itemSellIn = this.items[i].sellIn
 
       if (this.items[i] instanceof ConjuredItem) {
-        itemQuality = itemQuality - 2;
+        this.items[i].updateQuality()
       } else {
         if (itemName != ItemNames.AGED_BRIE && itemName != ItemNames.BACKSTAGE_PASS) {
           if (itemQuality > 0) {
@@ -76,9 +80,9 @@ class Shop {
             }
           }
         }
+        this.items[i].quality = itemQuality;
+        this.items[i].sellIn = itemSellIn;
       }
-      this.items[i].quality = itemQuality;
-      this.items[i].sellIn = itemSellIn;
     }
 
     return this.items;

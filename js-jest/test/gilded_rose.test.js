@@ -121,5 +121,13 @@ describe("Gilded Rose", function() {
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(3);
   });
+});
 
+describe("ConjuredItem", function() {
+  it("should foo", function() {
+    const conjuredItem = new ConjuredItem("ci", 1, 5);
+    conjuredItem.updateQuality();
+    expect(conjuredItem.quality).toBe(3);
+    expect(conjuredItem.sellIn).toBe(0);
+  });
 });
