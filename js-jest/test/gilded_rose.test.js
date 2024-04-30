@@ -1,4 +1,4 @@
-const {Shop, Item, ItemNames, ConjuredItem, BasicItem, AgedBrie} = require("../src/gilded_rose");
+const {Shop, Item, ItemNames, ConjuredItem, BasicItem, AgedBrie, Sulfuras} = require("../src/gilded_rose");
 
 describe("Gilded Rose", function() {
   it("should foo", function() {
@@ -202,5 +202,13 @@ describe("AgedBrie", function() {
     agedBrie.elapseDay();
     expect(agedBrie.quality).toBe(50);
   });
+});
 
+describe("Sulfuras", function() {
+  it("should not change Sulfuras sellin or quality", function() {
+    const sulfuras = new Sulfuras();
+    sulfuras.elapseDay();
+    expect(sulfuras.quality).toBe(80);
+    expect(sulfuras.sellIn).toBe(0);
+  });
 });
