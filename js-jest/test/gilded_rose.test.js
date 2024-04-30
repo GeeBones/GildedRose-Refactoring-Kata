@@ -1,4 +1,4 @@
-const {Shop, Item, ItemNames, ConjuredItem, BasicItem, AgedBrie, Sulfuras} = require("../src/gilded_rose");
+const {Shop, Item, ItemNames, ConjuredItem, BasicItem, AgedBrie, Sulfuras, BackstagePass} = require("../src/gilded_rose");
 
 describe("Gilded Rose", function() {
   it("should foo", function() {
@@ -92,13 +92,13 @@ describe("Gilded Rose", function() {
     expect(items[0].quality).toBe(2);
   });
 
-  it("should increase backstage pass quality by 2 when >= 10 days before sell by", function() {
+  it("should increase backstage pass quality by 2 when <= 10 days before sell by", function() {
     const gildedRose = new Shop([new Item(ItemNames.BACKSTAGE_PASS, 10, 1)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(3);
   });
 
-  it("should increase backstage pass quality by 3 when >= 5 days before sell by", function() {
+  it("should increase backstage pass quality by 3 when <= 5 days before sell by", function() {
     const gildedRose = new Shop([new Item(ItemNames.BACKSTAGE_PASS, 5, 1)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(4);
@@ -210,5 +210,43 @@ describe("Sulfuras", function() {
     sulfuras.elapseDay();
     expect(sulfuras.quality).toBe(80);
     expect(sulfuras.sellIn).toBe(0);
+  });
+});
+
+describe("Backstage Pass", function() {
+  it("should increase backstage pass quality by 1 when > 10 days before sell by", function() {
+    const backstage = new BackstagePass(11, 1);
+    backstage.elapseDay();
+    expect(backstage.quality).toBe(2);
+  });
+
+  it("should increase backstage pass quality by 2 when <= 10 days before sell by", function() {
+    const backstage = new BackstagePass(10, 1);
+    backstage.elapseDay();
+    expect(backstage.quality).toBe(3);
+  });
+
+  it("should increase backstage pass quality by 3 when <= 5 days before sell by", function() {
+    const backstage = new BackstagePass(5, 1);
+    backstage.elapseDay();
+    expect(backstage.quality).toBe(4);
+  });
+
+  it("should not increase backstage pass quality when 50", function() {
+    const backstage = new BackstagePass(5, 50);
+    backstage.elapseDay();
+    expect(backstage.quality).toBe(50);
+  });
+
+  it("should not increase backstage pass quality over 50", function() {
+    const backstage = new BackstagePass(5, 49);
+    backstage.elapseDay();
+    expect(backstage.quality).toBe(50);
+  });
+
+  it("should set backstage pass quality to 0 past sell by", function() {
+    const backstage = new BackstagePass(0, 49);
+    backstage.elapseDay();
+    expect(backstage.quality).toBe(0);
   });
 });

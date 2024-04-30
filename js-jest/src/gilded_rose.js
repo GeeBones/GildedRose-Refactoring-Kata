@@ -63,6 +63,32 @@ class Sulfuras extends BasicItem {
   elapseDay() {}
 }
 
+class BackstagePass extends BasicItem {
+  constructor(sellIn, quality) {
+    super(ItemNames.BACKSTAGE_PASS, sellIn, quality)
+  }
+
+  getQualityLoss() {
+    return -1;
+  }
+
+  getLossRate() {
+    if(this.sellIn < 5) {
+      return 3;
+    } else if(this.sellIn < 10) {
+      return 2;
+    } else {
+      return 1;
+    }
+  }
+
+  elapseDay() {
+    super.elapseDay()
+    this.quality = this.quality > 50 ? 50 : this.quality;
+    this.quality = this.sellIn < 0 ? 0 : this.quality;
+  }
+}
+
 const ItemNames = {
   AGED_BRIE : 'Aged Brie',
   BACKSTAGE_PASS : 'Backstage passes to a TAFKAL80ETC concert',
@@ -194,6 +220,7 @@ module.exports = {
   BasicItem,
   AgedBrie,
   Sulfuras,
+  BackstagePass,
   ConjuredItem,
   Shop,
   ItemNames
