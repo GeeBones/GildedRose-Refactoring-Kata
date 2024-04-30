@@ -10,7 +10,7 @@ class ConjuredItem extends Item {
   constructor(name, sellIn, quality){
     super(name, sellIn, quality)
   }
-  updateQuality() {
+  elapseDay() {
     this.sellIn = this.sellIn - 1;
     this.quality = this.quality -2;
   }
@@ -35,7 +35,7 @@ class Shop {
       let itemSellIn = this.items[i].sellIn
 
       if (this.items[i] instanceof ConjuredItem) {
-        this.items[i].updateQuality()
+        this.items[i].elapseDay()
       } else {
         if (itemName != ItemNames.AGED_BRIE && itemName != ItemNames.BACKSTAGE_PASS) {
           if (itemQuality > 0) {

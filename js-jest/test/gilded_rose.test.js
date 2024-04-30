@@ -126,7 +126,7 @@ describe("Gilded Rose", function() {
 describe("ConjuredItem", function() {
   it("should foo", function() {
     const conjuredItem = new ConjuredItem("ci", 1, 5);
-    conjuredItem.updateQuality();
+    conjuredItem.elapseDay();
     expect(conjuredItem.quality).toBe(3);
     expect(conjuredItem.sellIn).toBe(0);
   });
