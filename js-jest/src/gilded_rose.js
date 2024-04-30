@@ -6,6 +6,16 @@ class Item {
   }
 }
 
+class BasicItem extends Item {
+  constructor(name, sellIn, quality){
+    super(name, sellIn, quality)
+  }
+  elapseDay() {
+    this.sellIn = this.sellIn - 1;
+    this.quality = this.quality - 1;
+  }
+}
+
 class ConjuredItem extends Item {
   constructor(name, sellIn, quality){
     super(name, sellIn, quality)
@@ -34,7 +44,8 @@ class Shop {
       let itemQuality = this.items[i].quality;
       let itemSellIn = this.items[i].sellIn
 
-      if (this.items[i] instanceof ConjuredItem) {
+      if (this.items[i] instanceof ConjuredItem
+      || this.items[i] instanceof BasicItem) {
         this.items[i].elapseDay()
       } else {
         if (itemName != ItemNames.AGED_BRIE && itemName != ItemNames.BACKSTAGE_PASS) {
@@ -91,6 +102,7 @@ class Shop {
 
 module.exports = {
   Item,
+  BasicItem,
   ConjuredItem,
   Shop,
   ItemNames

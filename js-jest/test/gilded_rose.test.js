@@ -1,4 +1,4 @@
-const {Shop, Item, ItemNames, ConjuredItem} = require("../src/gilded_rose");
+const {Shop, Item, ItemNames, ConjuredItem, BasicItem} = require("../src/gilded_rose");
 
 describe("Gilded Rose", function() {
   it("should foo", function() {
@@ -124,10 +124,31 @@ describe("Gilded Rose", function() {
 });
 
 describe("ConjuredItem", function() {
-  it("should foo", function() {
+  it("should decrease sellIn by 1 and quality by 2", function() {
     const conjuredItem = new ConjuredItem("ci", 1, 5);
     conjuredItem.elapseDay();
     expect(conjuredItem.quality).toBe(3);
     expect(conjuredItem.sellIn).toBe(0);
+  });
+});
+
+describe("BasicItem", function() {
+  it("should decrease sellIn and quality by 1", function() {
+    const basicItem = new BasicItem("ci", 1, 5);
+    basicItem.elapseDay();
+    expect(basicItem.quality).toBe(4);
+    expect(basicItem.sellIn).toBe(0);
+  });
+
+  it("should decrease sell in past 0", function() {
+    const basicItem = new BasicItem("ci", 0, 5);
+    basicItem.elapseDay();
+    expect(basicItem.sellIn).toBe(-1);
+  });
+
+  it("should decrease by 2 after sell by", function() {
+    const basicItem = new BasicItem("ci", -1, 5);
+    basicItem.elapseDay();
+    expect(basicItem.quality).toBe(3);
   });
 });
