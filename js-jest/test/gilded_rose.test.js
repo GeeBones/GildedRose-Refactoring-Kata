@@ -87,37 +87,37 @@ describe("Gilded Rose", function() {
   });
 
   it("should increase backstage pass quality by 1 when > 10 days before sell by", function() {
-    const gildedRose = new Shop([new Item(ItemNames.BACKSTAGE_PASS, 11, 1)]);
+    const gildedRose = new Shop([new BackstagePass(11, 1)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(2);
   });
 
   it("should increase backstage pass quality by 2 when <= 10 days before sell by", function() {
-    const gildedRose = new Shop([new Item(ItemNames.BACKSTAGE_PASS, 10, 1)]);
+    const gildedRose = new Shop([new BackstagePass(10, 1)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(3);
   });
 
   it("should increase backstage pass quality by 3 when <= 5 days before sell by", function() {
-    const gildedRose = new Shop([new Item(ItemNames.BACKSTAGE_PASS, 5, 1)]);
+    const gildedRose = new Shop([new BackstagePass(5, 1)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(4);
   });
 
   it("should not increase backstage pass quality when 50", function() {
-    const gildedRose = new Shop([new Item(ItemNames.BACKSTAGE_PASS, 1, 50)]);
+    const gildedRose = new Shop([new BackstagePass(1, 50)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(50);
   });
 
   it("should not increase backstage pass quality over 50", function() {
-    const gildedRose = new Shop([new Item(ItemNames.BACKSTAGE_PASS, 1, 49)]);
+    const gildedRose = new Shop([new BackstagePass(1, 49)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(50);
   });
 
   it("should set backstage pass quality to 0 past sell by", function() {
-    const gildedRose = new Shop([new Item(ItemNames.BACKSTAGE_PASS, -1, 5)]);
+    const gildedRose = new Shop([new BackstagePass(-1, 5)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(0);
   });
